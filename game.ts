@@ -60,7 +60,7 @@ export class Game {
       }
       if (newPlusFour) {
         times(4, () => currentPlayer.receive(this.deck.take()));
-        //console.log(`${currentPlayer.toString()} must draw 4 cards.`);
+        console.log(`${currentPlayer.toString()} must draw 4 cards.`);
         newPlusFour = false;
       }
       const decision = currentPlayer.decide(
@@ -69,14 +69,14 @@ export class Game {
         plusTwoCount,
       );
       if (decision === undefined) {
-        //console.log(`${currentPlayer.toString()} had no available cards.`);
-        /*
+        console.log(`${currentPlayer.toString()} had no available cards.`);
+
         console.log(
           `${currentPlayer.toString()} must draw ${
             plusTwoCount > 0 ? 2 * plusTwoCount : 1
           } cards.`,
         );
-        */
+
         if (plusTwoCount > 0) {
           times(
             2 * plusTwoCount - 1,
@@ -88,7 +88,7 @@ export class Game {
         this.players.push(currentPlayer);
         continue;
       }
-      /*
+
       console.log(
         `%c${currentPlayer.toString()} made the decision: ${decision.toString()}`,
         "font-weight: bold; color: " +
@@ -96,13 +96,12 @@ export class Game {
             ? "black;background-color: white "
             : decision.color),
       );
-      */
+
       if (currentPlayer.handCards.length === 0) {
-        /*
         console.log(
           `Winner, winner, chicken dinner. ${currentPlayer.toString()}`,
         );
-        */
+
         break;
       }
       this.deck.discard(decision);
