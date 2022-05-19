@@ -1,5 +1,5 @@
 import { Card, Colors, ColorsWithSpecial, SpecialSymbols } from "./card.ts";
-import { times, shuffle } from "./utils.ts";
+import { shuffle, times } from "./utils.ts";
 
 export class Deck {
   private _unusedDeck: Card[];
@@ -52,7 +52,7 @@ export class Deck {
   }
 
   private _shuffle(): void {
-    this._unusedDeck = shuffle(this._unusedDeck)
+    this._unusedDeck = shuffle(this._unusedDeck);
   }
 
   private _createDeck(): Card[] {
@@ -83,9 +83,15 @@ export class Deck {
       });
     }
     times(4, () => {
-      constructedDeck.push(new Card(ColorsWithSpecial.special, SpecialSymbols.plusFour));
-      constructedDeck.push(new Card(ColorsWithSpecial.special, SpecialSymbols.wish));
-      constructedDeck.push(new Card(ColorsWithSpecial.special, SpecialSymbols.wish));
+      constructedDeck.push(
+        new Card(ColorsWithSpecial.special, SpecialSymbols.plusFour),
+      );
+      constructedDeck.push(
+        new Card(ColorsWithSpecial.special, SpecialSymbols.wish),
+      );
+      constructedDeck.push(
+        new Card(ColorsWithSpecial.special, SpecialSymbols.wish),
+      );
     });
     return constructedDeck;
   }

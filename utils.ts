@@ -21,5 +21,5 @@ export function shuffle<T>(array: T[]): T[] {
       array[i],
     ];
   }
-  return array
+  return array;
 }

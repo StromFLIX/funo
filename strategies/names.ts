@@ -1,4 +1,4 @@
 export enum Names {
-    obvious = "Obvious",
-    random = "Random"
+  obvious = "Obvious",
+  random = "Random",
 }

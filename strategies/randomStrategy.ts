@@ -1,4 +1,4 @@
-import { Card, SpecialSymbols, Colors } from "../card.ts";
+import { Card, Colors, SpecialSymbols } from "../card.ts";
 import { getPossibilities } from "../game.ts";
 import { Strategy } from "../strategy.ts";
 import { pickRandom } from "../utils.ts";

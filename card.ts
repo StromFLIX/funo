@@ -6,11 +6,11 @@ export enum Colors {
 }
 
 export enum Special {
-  special = "SPECIAL"
-} 
+  special = "SPECIAL",
+}
 
-export const ColorsWithSpecial = {...Special, ...Colors} 
-export type ColorsWithSpecial = Special | Colors
+export const ColorsWithSpecial = { ...Special, ...Colors };
+export type ColorsWithSpecial = Special | Colors;
 
 export enum SpecialSymbols {
   reverse = "REVERSE",

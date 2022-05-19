@@ -3,9 +3,8 @@ import { Player } from "./player.ts";
 import { Deck } from "./deck.ts";
 import { shuffle, times } from "./utils.ts";
 import Mock from "https://deno.land/x/deno_mock@v2.0.0/mod.ts";
-import {Strategies} from "./strategies/import.ts"
+import { Strategies } from "./strategies/import.ts";
 import { Names } from "./strategies/names.ts";
-
 
 export function getPossibilities(
   topCard: Card,
@@ -33,8 +32,11 @@ export class Game {
   players: Player[];
   deck: Deck;
 
-  constructor(teams: {strategyName: Names, players: number}[], cards: number) {
-    const playerAmount = teams.reduce((acc, cur) => acc + cur.players,0)
+  constructor(
+    teams: { strategyName: Names; players: number }[],
+    cards: number,
+  ) {
+    const playerAmount = teams.reduce((acc, cur) => acc + cur.players, 0);
     if (playerAmount < 2 || playerAmount > 10) {
       throw new Error("Players out of bounds.");
     }
@@ -43,11 +45,15 @@ export class Game {
     }
     this.deck = new Deck();
     this.deck.initialize();
-    this.players = teams.flatMap((team) =>(Array(team.players).fill(null).map(() => {
+    this.players = teams.flatMap((
+      team,
+    ) => (Array(team.players).fill(null).map(() => {
       const handCards = Array(cards).fill(null).map(() => this.deck.take());
-      const strategy = Strategies.find((strategy) => strategy.strategyName === team.strategyName)
-      if(!strategy){
-        throw new Error(`Strategy ${team.strategyName} not found.`)
+      const strategy = Strategies.find((strategy) =>
+        strategy.strategyName === team.strategyName
+      );
+      if (!strategy) {
+        throw new Error(`Strategy ${team.strategyName} not found.`);
       }
       return new Player(
         handCards,
@@ -55,18 +61,18 @@ export class Game {
         (Mock.Random.name() as string).split(" ")[0],
       );
     })));
-    this.players = shuffle(this.players)
+    this.players = shuffle(this.players);
   }
 
-  run(timeout?: number) : Names | "failed" {
+  run(timeout?: number): Names | "failed" {
     let newPlusFour = false;
     let plusTwoCount = 0;
     console.log(this.deck.toString());
-    let rounds = 0
+    let rounds = 0;
     while (true) {
-      rounds++
-      if(rounds > (timeout ?? Infinity)){
-        return "failed"
+      rounds++;
+      if (rounds > (timeout ?? Infinity)) {
+        return "failed";
       }
       const currentPlayer = this.players.shift();
       if (currentPlayer === undefined) {
