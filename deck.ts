@@ -1,5 +1,5 @@
-import { Card, ColorType } from "./card.ts";
-import { times } from "./utils.ts";
+import { Card, Colors, ColorsWithSpecial, SpecialSymbols } from "./card.ts";
+import { times, shuffle } from "./utils.ts";
 
 export class Deck {
   private _unusedDeck: Card[];
@@ -21,7 +21,7 @@ export class Deck {
   public initialize(): void {
     this._shuffle();
     const indexTopCardPrototype = this._unusedDeck.findIndex((unusedCard) =>
-      unusedCard.color !== "special"
+      unusedCard.color !== ColorsWithSpecial.special
     );
     this.topCard = this._unusedDeck.splice(indexTopCardPrototype, 1)[0];
   }
@@ -52,34 +52,28 @@ export class Deck {
   }
 
   private _shuffle(): void {
-    for (let i = this._unusedDeck.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this._unusedDeck[i], this._unusedDeck[j]] = [
-        this._unusedDeck[j],
-        this._unusedDeck[i],
-      ];
-    }
+    this._unusedDeck = shuffle(this._unusedDeck)
   }
 
   private _createDeck(): Card[] {
     const constructedDeck: Array<Card> = [];
     for (let i = 0; i <= 12; i++) {
-      (["red", "green", "blue", "yellow"] as ColorType[]).forEach((value) => {
+      Object.values(Colors).forEach((value) => {
         switch (i) {
           case 0:
             constructedDeck.push(new Card(value, i));
             break;
           case 10:
-            constructedDeck.push(new Card(value, "skip"));
-            constructedDeck.push(new Card(value, "skip"));
+            constructedDeck.push(new Card(value, SpecialSymbols.skip));
+            constructedDeck.push(new Card(value, SpecialSymbols.skip));
             break;
           case 11:
-            constructedDeck.push(new Card(value, "reverse"));
-            constructedDeck.push(new Card(value, "reverse"));
+            constructedDeck.push(new Card(value, SpecialSymbols.reverse));
+            constructedDeck.push(new Card(value, SpecialSymbols.reverse));
             break;
           case 12:
-            constructedDeck.push(new Card(value, "+2"));
-            constructedDeck.push(new Card(value, "+2"));
+            constructedDeck.push(new Card(value, SpecialSymbols.plustwo));
+            constructedDeck.push(new Card(value, SpecialSymbols.plustwo));
             break;
           default:
             constructedDeck.push(new Card(value, i));
@@ -89,9 +83,9 @@ export class Deck {
       });
     }
     times(4, () => {
-      constructedDeck.push(new Card("special", "+4"));
-      constructedDeck.push(new Card("special", "wish"));
-      constructedDeck.push(new Card("special", "wish"));
+      constructedDeck.push(new Card(ColorsWithSpecial.special, SpecialSymbols.plusFour));
+      constructedDeck.push(new Card(ColorsWithSpecial.special, SpecialSymbols.wish));
+      constructedDeck.push(new Card(ColorsWithSpecial.special, SpecialSymbols.wish));
     });
     return constructedDeck;
   }
